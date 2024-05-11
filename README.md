@@ -5,6 +5,10 @@
 Version 2.0.0 introduces uses wait_for_it script for the cluster startup
 
 # Hadoop Docker
+It's necessary to build the base image, run:
+```
+docker build -t hadoop-base:latest ./base
+```
 
 ## Supported Hadoop Versions
 See repository branches for supported hadoop versions
