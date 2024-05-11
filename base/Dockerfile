@@ -11,6 +11,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
       gnupg \
       libsnappy-dev \
       openssh-server \
+      dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
@@ -47,5 +48,5 @@ ENV PATH $HADOOP_HOME/bin/:$PATH
 ADD entrypoint.sh /entrypoint.sh
 
 RUN chmod a+x /entrypoint.sh
-
+RUN dos2unix /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
