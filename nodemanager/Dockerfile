@@ -8,5 +8,6 @@ ADD run.sh /run.sh
 RUN chmod a+x /run.sh
 
 EXPOSE 8042
+RUN dos2unix /run.sh
 
 CMD ["/run.sh"]
