@@ -8,6 +8,7 @@ services:
     ports:
       - 9870:9870
       - 9000:9000
+      - 22:22
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     environment:
