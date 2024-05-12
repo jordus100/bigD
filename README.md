@@ -1,5 +1,17 @@
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/big-data-europe/Lobby)
 
+# BIGd Project - Changes
+namenode has port 22 mapped to 127.0.0.1:22
+use 
+'''
+ssh bigd@127.0.0.1
+'''
+and 
+'''
+bigd
+'''
+password to connect.
+
 # Changes
 
 Version 2.0.0 introduces uses wait_for_it script for the cluster startup
