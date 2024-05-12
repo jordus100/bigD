@@ -4,7 +4,10 @@ MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
 MAINTAINER Giannis Mouchakis <gmouchakis@iit.demokritos.gr>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      openjdk-8-jdk \
+      vim \
+      sudo \
+      unzip \
+      openjdk-21-jdk \
       net-tools \
       curl \
       netcat-openbsd \
@@ -14,10 +17,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
       dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64" >> ~/.bashrc
+
+RUN echo 'root:root' | chpasswd
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 bigd
 RUN echo 'bigd:bigd' | chpasswd
 
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64/
 
 RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
 
