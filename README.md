@@ -1,10 +1,15 @@
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/big-data-europe/Lobby)
 
 # BIGd Project - Changes
+root's password is root.
 namenode has port 22 mapped to 127.0.0.1:22.
 Use: 
 ```
 ssh bigd@127.0.0.1
+```
+or:
+```
+ssh bigd@127.0.0.1 -o "UserKnownHostsFile=/dev/null"
 ```
 and 
 ```
