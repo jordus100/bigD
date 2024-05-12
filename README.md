@@ -3,13 +3,13 @@
 # BIGd Project - Changes
 namenode has port 22 mapped to 127.0.0.1:22
 use 
-'''
+```
 ssh bigd@127.0.0.1
-'''
+```
 and 
-'''
+```
 bigd
-'''
+```
 password to connect.
 
 # Changes
