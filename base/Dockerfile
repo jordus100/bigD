@@ -7,7 +7,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
       vim \
       sudo \
       unzip \
-      openjdk-21-jdk \
+      openjdk-8-jdk \
       net-tools \
       curl \
       netcat-openbsd \
@@ -17,18 +17,11 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
       dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
-RUN echo "JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64" >> ~/.bashrc
-
 RUN echo 'root:root' | chpasswd
 RUN useradd -rm -d /home/bigd -s /bin/bash -g root -G sudo -u 1000 bigd
 RUN echo 'bigd:bigd' | chpasswd
 
-ENV JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64/
-
-USER bigd
-RUN echo "JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64" >> ~/.bashrc
-ENV JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64/
-USER root
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
 
@@ -57,7 +50,6 @@ ENV USER=root
 ENV PATH $HADOOP_HOME/bin/:$PATH
 
 EXPOSE 22
-RUN service ssh start
 
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
