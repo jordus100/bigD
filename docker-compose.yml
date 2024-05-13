@@ -10,6 +10,7 @@ services:
       - 9000:9000
       - 22:22
       - 8443:8443
+      - 8080:8080
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     environment:

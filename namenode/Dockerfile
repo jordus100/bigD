@@ -16,7 +16,10 @@ RUN chmod a+x /run.sh
 
 EXPOSE 9870
 EXPOSE 8443
+EXPOSE 8080
 
+
+# nifi
 RUN curl https://dlcdn.apache.org/nifi/2.0.0-M2/nifi-2.0.0-M2-bin.zip --output /home/bigd/nifi.zip
 RUN unzip /home/bigd/nifi.zip -d /home/bigd
 
