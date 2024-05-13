@@ -20,12 +20,12 @@ EXPOSE 8080
 
 
 # nifi
-RUN curl https://dlcdn.apache.org/nifi/2.0.0-M2/nifi-2.0.0-M2-bin.zip --output /home/bigd/nifi.zip
+RUN curl https://dlcdn.apache.org/nifi/1.26.0/nifi-1.26.0-bin.zip --output /home/bigd/nifi.zip
 RUN unzip /home/bigd/nifi.zip -d /home/bigd
 
 ADD nifi.properties /home/bigd/nifi.properties
 RUN dos2unix /home/bigd/nifi.properties
-RUN mv /home/bigd/nifi.properties /home/bigd/nifi-2.0.0-M2/conf/nifi.properties
+RUN mv /home/bigd/nifi.properties /home/bigd/nifi-1.26.0/conf/nifi.properties
 
 # spark
 RUN curl https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz --output spark.tgz
