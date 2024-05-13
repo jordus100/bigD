@@ -17,3 +17,12 @@ nifi-2.0.0-M2/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
 RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 start
 RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 set-single-user-credentials bigd bigdbigdbigd
 RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 restart
+
+# spark
+curl https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz --output spark.tgz
+sudo tar xvf spark.tgz
+sudo mkdir /opt/spark
+sudo mv spark-3.5.1-bin-hadoop3/ /opt/spark/
+sudo chmod -R 777 /opt/spark
+echo "export SPARK_HOME=/opt/spark" >> ~/.bashrc
+echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" >> ~/.bashrc
