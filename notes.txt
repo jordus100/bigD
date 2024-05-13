@@ -1,0 +1,19 @@
+/nifi-2.0.0-M2/bin/nifi.sh start
+
+# For security, NiFi will present the UI on 127.0.0.1 and only be accessible through this loopback interface.
+# Be aware that changing these properties may affect how your instance can be accessed without any restriction.
+# We recommend configuring HTTPS instead. The administrators guide provides instructions on how to do this.
+
+nifi.web.http.host=127.0.0.1
+nifi.web.http.port=8443
+nifi.web.http.network.interface.default=
+
+
+bigd@0c577f7c13a2:~$ echo "JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64" >> ~/.bashrc
+bigd@0c577f7c13a2:~$ source ~/.bashrc
+nifi-2.0.0-M2/bin/nifi.sh start
+nifi-2.0.0-M2/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
+
+RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 start
+RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 set-single-user-credentials bigd bigdbigdbigd
+RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 restart

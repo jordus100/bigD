@@ -4,6 +4,9 @@ MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
 MAINTAINER Giannis Mouchakis <gmouchakis@iit.demokritos.gr>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      vim \
+      sudo \
+      unzip \
       openjdk-8-jdk \
       net-tools \
       curl \
@@ -14,8 +17,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
       dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
-RUN echo 'user:resu' | chpasswd
+RUN echo 'root:root' | chpasswd
+RUN useradd -rm -d /home/bigd -s /bin/bash -g root -G sudo -u 1000 bigd
+RUN echo 'bigd:bigd' | chpasswd
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
@@ -45,8 +49,10 @@ ENV MULTIHOMED_NETWORK=1
 ENV USER=root
 ENV PATH $HADOOP_HOME/bin/:$PATH
 
-ADD entrypoint.sh /entrypoint.sh
+EXPOSE 22
 
+ADD entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
 RUN dos2unix /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
