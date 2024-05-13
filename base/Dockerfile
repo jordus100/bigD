@@ -55,15 +55,4 @@ ADD entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
 RUN dos2unix /entrypoint.sh
 
-# spark
-RUN curl https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz --output spark.tgz
-RUN sudo tar xvf spark.tgz
-
-RUN mv spark-3.5.1-bin-hadoop3 /opt
-RUN mv /opt/spark-3.5.1-bin-hadoop3 /opt/spark
-
-RUN chmod -R 777 /opt/spark
-RUN echo "export SPARK_HOME=/opt/spark" >> ~/.bashrc
-RUN echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" >> ~/.bashrc
-
 ENTRYPOINT ["/entrypoint.sh"]
