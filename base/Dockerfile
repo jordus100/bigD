@@ -20,10 +20,15 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 RUN echo "JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64" >> ~/.bashrc
 
 RUN echo 'root:root' | chpasswd
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 bigd
+RUN useradd -rm -d /home/bigd -s /bin/bash -g root -G sudo -u 1000 bigd
 RUN echo 'bigd:bigd' | chpasswd
 
 ENV JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64/
+
+USER bigd
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64" >> ~/.bashrc
+ENV JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64/
+USER root
 
 RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
 

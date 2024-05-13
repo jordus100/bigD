@@ -14,6 +14,6 @@ bigd@0c577f7c13a2:~$ source ~/.bashrc
 nifi-2.0.0-M2/bin/nifi.sh start
 nifi-2.0.0-M2/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
 
-RUN nifi-2.0.0-M2/bin/nifi.sh start
-RUN nifi-2.0.0-M2/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
-RUN nifi-2.0.0-M2/bin/nifi.sh restart
+RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 start
+RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 set-single-user-credentials bigd bigdbigdbigd
+RUN nifi-2.0.0-M2/bin/nifi.sh JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 restart

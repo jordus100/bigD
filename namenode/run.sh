@@ -1,5 +1,9 @@
 #!/bin/bash
 
+JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 /home/bigd/nifi-2.0.0-M2/bin/nifi.sh start
+JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 /home/bigd/nifi-2.0.0-M2/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
+JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 /home/bigd/nifi-2.0.0-M2/bin/nifi.sh restart
+
 namedir=`echo $HDFS_CONF_dfs_namenode_name_dir | perl -pe 's#file://##'`
 if [ ! -d $namedir ]; then
   echo "Namenode name directory not found: $namedir"
