@@ -15,6 +15,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
       libsnappy-dev \
       openssh-server \
       dos2unix \
+      python3 \
+      python3-pip \
+      python3.10-venv \
     && rm -rf /var/lib/apt/lists/*
 
 RUN echo 'root:root' | chpasswd
