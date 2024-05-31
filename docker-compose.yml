@@ -33,6 +33,8 @@ services:
     build: ./resourcemanager
     container_name: resourcemanager
     restart: always
+    ports:
+      - 8088:8088
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
     env_file:
