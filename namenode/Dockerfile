@@ -4,6 +4,7 @@ MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       openjdk-21-jdk
+
 ENV JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64/
 
 HEALTHCHECK CMD curl -f http://localhost:9870/ || exit 1
