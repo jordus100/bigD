@@ -2,7 +2,7 @@ import math
 from math import ceil
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, broadcast, sum, when, ceil as spark_ceil, explode
-from pyspark.sql.functions import monotonically_increasing_id, row_number, first
+from pyspark.sql.functions import monotonically_increasing_id, row_number, first, avg
 from pyspark.sql.types import DoubleType, IntegerType
 from pyspark.sql.window import Window
 from collections import defaultdict
@@ -109,7 +109,7 @@ final_bus_stops_df = final_bus_stops_df.withColumn(
 result_df = final_bus_stops_df.groupBy("population", "longitude", "latitude").agg(
     sum(when(col("distance") < 100, 1).otherwise(0)).alias("0_100_stops"),
     sum(when((col("distance") >= 100) & (col("distance") < 1000), 1).otherwise(0)).alias("100_1000_stops"),
-    sum(when((col("distance") >= 1000) & (col("distance") < 2000), 1).otherwise(0)).alias("1000_2000_stops")
+    sum(when((col("distance") >= 1000) & (col("distance") < 2000), 1).otherwise(0)).alias("1000_2000_stops"),
 )
 
 # Calculate the score based on the stops in different distance ranges
@@ -117,6 +117,22 @@ result_df = result_df.withColumn(
     "score",
     spark_ceil((col("0_100_stops") * 10 + col("100_1000_stops") * 5 + col("1000_2000_stops")) / col("population"))
 )
+
+window_spec = Window.partitionBy("population", "longitude", "latitude").orderBy("distance")
+
+# Add a row number to each distance within the partition to select the top 3 distances
+ranked_distances_df = final_bus_stops_df.withColumn("rank", row_number().over(window_spec))
+
+# Filter to get only the top 3 distances
+top_3_distances_df = ranked_distances_df.filter(col("rank") <= 3)
+
+# Calculate the average of the top 3 distances
+avg_distances_df = top_3_distances_df.groupBy("population", "longitude", "latitude").agg(
+    avg("distance").alias("avg_3_distances")
+)
+
+# Join the average distances back to the result dataframe
+result_df = result_df.join(avg_distances_df, on=["population", "longitude", "latitude"], how="left")
 
 # Select the final columns to display
 result_df = result_df.select(
@@ -126,9 +142,11 @@ result_df = result_df.select(
     col("0_100_stops"),
     col("100_1000_stops"),
     col("1000_2000_stops"),
-    col("score")
+    col("score"),
+    col("avg_3_distances")
 )
 
+result_df.show()
 # Show the results
 result_df.coalesce(1).write.mode("overwrite").json("hdfs:///score.json")
 

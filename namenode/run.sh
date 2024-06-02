@@ -6,6 +6,11 @@ export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
 # Dump all environment variables for interactive users
 env | egrep -v "^(HOME=|USER=|MAIL=|LC_ALL=|LS_COLORS=|LANG=|HOSTNAME=|PWD=|TERM=|SHLVL=|LANGUAGE=|_=)" >> /etc/environment
 
+# Create Python venv for Apache Spark
+python3 -m venv /home/bigd/sparkvenv
+source /home/bigd/sparkvenv/bin/activate
+pip install pyspark pyspark[sql] matplotlib pillow
+
 /home/bigd/nifi-1.26.0/bin/nifi.sh start
 /home/bigd/nifi-1.26.0/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
 /home/bigd/nifi-1.26.0/bin/nifi.sh restart
