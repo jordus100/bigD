@@ -10,6 +10,7 @@ python3 -m venv /home/bigd/sparkvenv
 source /home/bigd/sparkvenv/bin/activate
 pip install pyspark pyspark[sql] matplotlib pillow venv-pack
 venv-pack -o /home/bigd/sparkvenv.tar.gz
+chown bigd /home/bigd/sparkvenv.tar.gz
 
 /home/bigd/nifi-1.26.0/bin/nifi.sh start
 /home/bigd/nifi-1.26.0/bin/nifi.sh set-single-user-credentials bigd bigdbigdbigd
