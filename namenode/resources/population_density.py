@@ -12,7 +12,7 @@ spark = SparkSession.builder.appName("PopulationDensity").getOrCreate()
 # Read the image file from HDFS using Spark
 image_bytes = spark.sparkContext.binaryFiles("hdfs:///raw_image_data.webp").take(1)[0][1]
 img = Image.open(BytesIO(image_bytes)).convert("RGB")
-# Define color values and other parameters
+
 colors = [
     (25, 0, 117),
     (93, 26, 201),
@@ -28,17 +28,14 @@ colors = [
 ]
 
 populacja_waw = 1765000
-
 left = 20.852142
 right = 21.257111
 top = 52.366347
 bottom = 52.100750
 
 color_values = list(range(10, -1, -1))
-
 color_to_value = {color: value for color, value in zip(colors, color_values)}
 
-# Function to find closest color and value
 def find_closest_color_and_value(pixel):
     pixel_array = np.array(pixel)
     color_array = np.array(colors)
@@ -48,9 +45,16 @@ def find_closest_color_and_value(pixel):
     value = color_to_value[closest_color]
     return value
 
-# Process image to generate support data
 width, height = img.size
 image_values = np.zeros((height, width), dtype=int)
+for y in range(height):
+    for x in range(width):
+        pixel = img.getpixel((x, y))
+        value = find_closest_color_and_value(pixel)
+        image_values[y, x] = value
+
+image_values = image_values[~np.all(image_values == 0, axis=1)]
+image_values = image_values[:, ~np.all(image_values == 0, axis=0)]
 
 height, width = image_values.shape
 lr = round((right - left) / width, 6)
@@ -69,31 +73,28 @@ count = 0
 for record in support:
     count += record[0]
 
-ppl_per_point = int(round(populacja_waw / count, 0))
+ppl_per_point = round(populacja_waw / count, 0)
 
 for record in support:
-    record[0] = int(record[0] * ppl_per_point)
+    record[0] = record[0] * ppl_per_point
 
 final = []
 for record in support:
     if record[0] != 0:
         final.append(record)
 
-# Define schema for final DataFrame
+# Convert to Spark DataFrame
 final_schema = StructType([
     StructField("population", IntegerType(), True),
     StructField("longitude", DoubleType(), True),
     StructField("latitude", DoubleType(), True)
 ])
 
-# Create RDD from final list
 final_rdd = spark.sparkContext.parallelize(final)
-
-# Create DataFrame from RDD and schema
 final_df = spark.createDataFrame(final_rdd, schema=final_schema)
 
-# Write final DataFrame to HDFS in JSON format
-final_df.write.mode("overwrite").json("hdfs:///population_density.json")
+# Save the final DataFrame to HDFS
+final_df.write.mode("overwrite").parquet("hdfs:///path/to/final.parquet")
 
 # Stop the Spark session
 spark.stop()
