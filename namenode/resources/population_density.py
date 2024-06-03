@@ -94,7 +94,7 @@ final_rdd = spark.sparkContext.parallelize(final)
 final_df = spark.createDataFrame(final_rdd, schema=final_schema)
 
 # Save the final DataFrame to HDFS
-final_df.write.mode("overwrite").parquet("hdfs:///path/to/final.parquet")
+final_df.write.mode("overwrite").json("hdfs:///population_density.json")
 
 # Stop the Spark session
 spark.stop()
