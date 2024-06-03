@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import subprocess
 
 left = 20.852142
 right = 21.257111
@@ -41,6 +42,12 @@ plt.ylabel('Latitude')
 plt.title('Public transport availability score')
 plt.axis('on')
 plt.savefig('score.png')
+import subprocess
+
+# Command to transfer the file to HDFS
+cmd = f"hdfs dfs -put {'score.png'} {f'hdfs:///score.png'}"
+subprocess.run(cmd, shell=True, check=True)
+
 
 image = np.zeros((height, width), dtype=float)
 
@@ -62,3 +69,6 @@ plt.ylabel('Latitude')
 plt.title('Average distance to 3 nearest bus stops')
 plt.axis('on')
 plt.savefig('avg.png')
+
+cmd = f"hdfs dfs -put {'avg.png'} {f'hdfs:///avg.png'}"
+subprocess.run(cmd, shell=True, check=True)

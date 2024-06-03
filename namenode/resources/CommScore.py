@@ -39,7 +39,7 @@ left = 20.852142
 right = 21.257111
 top = 52.366347
 bottom = 52.100750
-cell_size = 0.02  # Adjust the cell size as needed
+cell_size = 0.05  # Adjust the cell size as needed
 
 # Function to assign points to grid cells
 def assign_to_grid(df, left, bottom, cell_size):

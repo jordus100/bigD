@@ -32,7 +32,9 @@ RUN mv /home/bigd/nifi.properties /home/bigd/nifi-1.26.0/conf/nifi.properties
 ADD resources/CommScore.py /home/bigd/CommScore.py
 ADD resources/population_density.py /home/bigd/population_density.py
 ADD resources/visualisation.py /home/bigd/visualisation.py
+ADD resources/map_gen.py /home/bigd/map_gen.py
 ADD resources/raw_image_data.webp /home/bigd/raw_image_data.webp
+ADD resources/run-spark.sh /home/bigd/run-spark.sh
 
 # spark
 RUN curl https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz --output spark.tgz
