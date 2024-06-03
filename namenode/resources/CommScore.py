@@ -14,7 +14,7 @@ spark = SparkSession.builder.appName("CommScore").getOrCreate()
 final_df = spark.read.json("hdfs:///population_density.json")
 
 # Load bus stops data from HDFS
-bus_stops_raw_df = spark.read.json("hdfs:///JSON_przystanki")
+bus_stops_raw_df = spark.read.json("hdfs:///buses/stops/bus_stops")
 
 bus_stops_df = bus_stops_raw_df.select(explode(col("values")).alias("values")) \
     .selectExpr("values.key as key", "values.value as value") \

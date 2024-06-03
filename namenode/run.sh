@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Setup and launch Nifi
 export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
 
 # Dump all environment variables for interactive users

@@ -10,9 +10,7 @@ from pyspark.sql.types import DoubleType, IntegerType, StructType, StructField
 spark = SparkSession.builder.appName("PopulationDensity").getOrCreate()
 
 # Read the image file from HDFS using Spark
-image_bytes = spark.sparkContext.binaryFiles("hdfs:///raw_image_data.webp").take(1)[0][1]
-img = Image.open(BytesIO(image_bytes)).convert("RGB")
-
+img = Image.open("raw_image_data.webp")
 # Define color values and other parameters
 colors = [
     (25, 0, 117),
