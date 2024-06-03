@@ -73,10 +73,10 @@ count = 0
 for record in support:
     count += record[0]
 
-ppl_per_point = round(populacja_waw / count, 0)
+ppl_per_point = int(round(populacja_waw / count, 0))
 
 for record in support:
-    record[0] = record[0] * ppl_per_point
+    record[0] = int(record[0] * ppl_per_point)
 
 final = []
 for record in support:
